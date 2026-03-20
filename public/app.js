@@ -182,6 +182,7 @@ $("landing-form").addEventListener("submit", (e) => {
   state.answers.description = desc;
   state.answers.q1_what = desc; // Landing textarea IS the "what are you building" answer
   state.currentStep = 0;
+  trackEvent("start_wizard", { mode: "user" });
   showWizardStep();
 });
 
@@ -198,6 +199,7 @@ $("btn-surprise").addEventListener("click", () => {
   state.answers.q5_competitors = concept.q5_competitors;
 
   $("surprise-description").textContent = concept.description;
+  trackEvent("start_wizard", { mode: "surprise", concept: concept.description.slice(0, 80) });
   showScreen("surprise");
 });
 
@@ -276,6 +278,7 @@ $("btn-next").addEventListener("click", () => {
 
   // Next step
   state.currentStep++;
+  trackEvent("wizard_step", { step: state.currentStep, step_id: step.id, mode: state.mode });
 
   if (state.currentStep < allSteps.length) {
     showWizardStep();
@@ -308,6 +311,7 @@ $("btn-skip").addEventListener("click", () => {
     }
   }
   // Skip straight to generation
+  trackEvent("skip_to_end", { step: state.currentStep, mode: state.mode });
   fireGenerateCall();
 });
 
@@ -326,6 +330,7 @@ async function fireFollowupCall() {
     const data = await res.json();
 
     if (data.questions && data.questions.length > 0) {
+      trackEvent("followup_questions", { count: data.questions.length });
       state.followupQuestions = data.questions.slice(0, 2);
       state.totalSteps = WIZARD_QUESTIONS.length + state.followupQuestions.length;
       // currentStep is already at WIZARD_QUESTIONS.length, which is the first follow-up
@@ -345,6 +350,7 @@ async function fireFollowupCall() {
 
 async function fireGenerateCall() {
   showScreen("loading");
+  trackEvent("generation_start", { mode: state.mode });
   $("loading-text").textContent = "Step 1 of 5 — Synthesizing discovery";
   $("loading-subtext").textContent = "";
   $("loading-bar").style.width = "5%";
@@ -393,6 +399,7 @@ async function fireGenerateCall() {
     parseAndShowResults();
   } catch (err) {
     console.error("Generation failed:", err);
+    trackEvent("generation_error", { error: err.message });
     $("loading-text").textContent = "Something went wrong. Please try again.";
   }
 }
@@ -506,6 +513,11 @@ function parseAndShowResults() {
     state.finalists = parseFinalists(text);
   }
 
+  trackEvent("results_shown", {
+    mode: state.mode,
+    finalist_count: state.finalists.length,
+    finalist_names: state.finalists.map(f => f.name).join(", "),
+  });
   renderResults();
 }
 
@@ -726,6 +738,7 @@ function renderReport() {
 // ─── Start over ───
 
 $("btn-start-over").addEventListener("click", () => {
+  trackEvent("start_over");
   state.mode = null;
   state.answers = { description: "", q1_what: "", q2_who: "", q3_different: "", q4_feeling: "", q5_competitors: "", q6_winning: "", q7_say: "", followups: [] };
   state.followupQuestions = [];
@@ -773,6 +786,14 @@ function renderMarkdown(text) {
     })
     .join("\n");
   return html;
+}
+
+// ─── Analytics ───
+
+function trackEvent(eventName, params = {}) {
+  if (typeof gtag === "function") {
+    gtag("event", eventName, params);
+  }
 }
 
 // ─── Init ───

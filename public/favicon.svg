@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="8" fill="#1a1a1a"/>
+  <!-- Bold serif B with speech-bubble-shaped upper counter -->
+  <path d="
+    M 18 12
+    L 34 12
+    C 40 12 44 15 44 20
+    C 44 24 42 26.5 38 27.5
+    L 38 27.8
+    C 43 28.8 46 32 46 36.5
+    C 46 42.5 41.5 46 34.5 46
+    L 25 46
+    L 22 50
+    L 18 46
+    L 18 12
+    Z
+
+    M 26 26
+    L 33 26
+    C 36.5 26 38.5 24 38.5 21
+    C 38.5 18 36.5 16 33 16
+    L 26 16
+    Z
+
+    M 26 42
+    L 34 42
+    C 38 42 40 39.5 40 36.5
+    C 40 33.5 38 31 34 31
+    L 26 31
+    Z
+  " fill="#fafaf8" fill-rule="evenodd"/>
+</svg>

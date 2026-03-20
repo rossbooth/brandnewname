@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    { "source": "/how-it-works", "destination": "/how-it-works.html" },
+    { "source": "/api/followup", "destination": "/api/followup.js" },
+    { "source": "/api/generate", "destination": "/api/generate.js" }
+  ],
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 300
+    }
+  }
+}

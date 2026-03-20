@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrandNewName</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- Progress bar (visible during wizard) -->
+  <div id="progress-bar" class="progress-bar" hidden>
+    <div id="progress-fill" class="progress-fill"></div>
+  </div>
+
+  <main>
+    <!-- ─── Landing ─── -->
+    <section id="screen-landing" class="screen screen-landing">
+      <div class="landing-content">
+        <p class="lede">Naming a brand is hard.</p>
+        <p class="body-copy">Sometimes the name becomes really important, sometimes not so important.</p>
+        <p class="body-copy">But all things equal, a great name is better than a shitty name.</p>
+        <p class="body-copy">Below is a naming process inspired by the methodology behind <em>Blackberry</em>, <em>Swiffer</em>, <em>Impossible</em>, <em>Sonos</em>, <em>Dasani</em> and many more.</p>
+        <p class="body-copy">Try it out. Only takes a few mins. <a href="/how-it-works" class="subtle-link">How it works &rarr;</a></p>
+        <form id="landing-form">
+          <textarea id="landing-textarea" rows="4" placeholder="Describe your product, company, or idea. What does it do? Who is it for?" required></textarea>
+          <div class="button-row">
+            <button type="submit" class="btn-primary">Find my forever name</button>
+            <button type="button" id="btn-surprise" class="btn-secondary">Surprise me</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ─── Surprise reveal ─── -->
+    <section id="screen-surprise" class="screen screen-center" hidden>
+      <div class="wizard-card">
+        <p class="wizard-context">Let's walk through the methodology with a random product.</p>
+        <p class="wizard-question" id="surprise-description"></p>
+        <div class="button-row button-row-center">
+          <button id="btn-surprise-go" class="btn-primary">Let's go</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Wizard step (reused for all questions) ─── -->
+    <section id="screen-wizard" class="screen screen-center" hidden>
+      <div class="wizard-card">
+        <p class="wizard-context" id="wizard-context"></p>
+        <p class="wizard-question" id="wizard-question"></p>
+        <p class="wizard-subtext" id="wizard-subtext"></p>
+        <textarea id="wizard-textarea" rows="4" placeholder="Your response..."></textarea>
+        <div class="wizard-actions">
+          <button id="btn-back" class="btn-back">&larr; Back</button>
+          <div class="wizard-actions-right">
+            <button id="btn-skip" class="btn-secondary btn-small" hidden>Skip to the end</button>
+            <button id="btn-next" class="btn-primary">Next</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Loading (follow-up + generation) ─── -->
+    <section id="screen-loading" class="screen screen-center" hidden>
+      <div class="loading-card">
+        <div class="loading-progress-track">
+          <div class="loading-progress-bar" id="loading-bar"></div>
+        </div>
+        <p class="loading-text" id="loading-text">Reviewing your answers...</p>
+        <p class="loading-subtext" id="loading-subtext"></p>
+      </div>
+    </section>
+
+    <!-- ─── Results ─── -->
+    <section id="screen-results" class="screen" hidden>
+      <div class="results-header">
+        <p class="results-headline">Your names.</p>
+      </div>
+      <div id="results-gallery" class="results-gallery"></div>
+
+      <div class="results-report">
+        <p class="report-headline">The full report</p>
+        <div id="report-content"></div>
+      </div>
+
+      <div class="results-footer">
+        <button id="btn-start-over" class="btn-secondary">Start over with a new product</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
